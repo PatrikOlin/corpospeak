@@ -16,6 +16,8 @@ const LEVEL_ENEMY_COUNTS = [5, 8, 12, 18, 26]
 const MIN_ROOM_DIMENSION = 5
 const MAX_ROOM_DIMENSION = 8 
 const PLAYER_START_HP = 5
+const DIALOG_POS = Vector2(-400, -420)
+const LVL1_WORKER_DIALOG = "combat_lvl1_worker_"
 
 enum Tile {Wall, Floor, Door, Ladder, Stone}
 
@@ -29,7 +31,8 @@ class Enemy extends Reference:
 	var dead = false
 
 	func _init(game, enemy_level, x, y):
-		full_hp = 1 + enemy_level * 2
+		# full_hp = 1 + enemy_level * 2
+		full_hp = 1 
 		hp = full_hp
 		tile = Vector2(x, y)
 		sprite_node = EnemyScene.instance()
@@ -47,12 +50,12 @@ class Enemy extends Reference:
 		hp = max(0, hp - dmg)
 		sprite_node.get_node("HPBar").rect_size.x = TILE_SIZE * hp / full_hp
 
-		if hp == 0:
+		if hp <= 0:
 			dead = true
 			game.score += 10 * full_hp
 
 	func act(game):
-		if !sprite_node.visible:
+		if !sprite_node.visible or game.is_dialog_open:
 			return
 
 		var my_point = game.enemy_pathfinding.get_closest_point(Vector3(tile.x, tile.y, 0))
@@ -64,6 +67,7 @@ class Enemy extends Reference:
 
 			if move_tile == game.player_tile:
 				game.initiate_combat()
+				game.active_enemy = self
 			else:
 				var blocked = false 
 				for enemy in game.enemies:
@@ -88,6 +92,7 @@ var enemies = []
 onready var tile_map = $TileMap
 onready var visibility_map = $VisibilityMap
 onready var player = $Player
+onready var dialog_control = $CanvasLayer/DialogControl
 
 # Game State
 
@@ -95,14 +100,18 @@ var player_tile
 var score = 0
 var enemy_pathfinding
 var player_hp = PLAYER_START_HP
+var is_dialog_open = false
+var active_enemy
+var rng = RandomNumberGenerator.new()
 
 func _ready():
 	OS.set_window_size(Vector2(1280, 720))
+	rng.randomize()
 	randomize()
 	build_level()
 
 func _input(event):
-	if !event.is_pressed():
+	if !event.is_pressed() or is_dialog_open:
 		return
 
 	if event.is_action("Left"):
@@ -115,6 +124,9 @@ func _input(event):
 		try_move(0, 1)
 	
 func try_move(dx, dy):
+	if (player.current_workload >= player.MAX_WORKLOAD):
+		$CanvasLayer/Lose.visible = true
+		return
 	var x = player_tile.x + dx
 	var y = player_tile.y + dy
 
@@ -126,11 +138,13 @@ func try_move(dx, dy):
 		Tile.Floor:
 			var blocked = false
 			for enemy in enemies:
+				if enemy.dead:
+					enemy.remove()
+					enemies.erase(enemy)
+					break
 				if enemy.tile.x == x && enemy.tile.y == y:
-					enemy.take_damage(self, 1)
-					if enemy.dead:
-						enemy.remove()
-						enemies.erase(enemy)
+					start_dialog()
+					active_enemy = enemy
 					blocked = true
 					break
 
@@ -204,7 +218,7 @@ func build_level():
 				break
 
 		if !blocked:
-			var enemy = Enemy.new(self, randi() % 2, x, y)
+			var enemy = Enemy.new(self, 0, x, y)
 			enemies.append(enemy)
 
 	# Place end ladder
@@ -214,7 +228,7 @@ func build_level():
 	var ladder_y = end_room.position.y + 1 + randi() % int(end_room.size.y - 2)
 	set_tile(ladder_x, ladder_y, Tile.Ladder)
 
-	$CanvasLayer/HUD/Level.text = "Level: " + str(level_num)
+	$CanvasLayer/HUD/Floor.text = "Floor: " + str(level_num)
 
 func clear_path(tile):
 	var new_point = enemy_pathfinding.get_available_point_id()
@@ -258,7 +272,7 @@ func update_visuals():
 			if !occlusion:
 				enemy.sprite_node.visible = true
 
-	$CanvasLayer/HUD/HP.text = "HP: " + str(player_hp)
+	$CanvasLayer/HUD/Workload.text = "Workload: " + str(player.current_workload)
 	$CanvasLayer/HUD/Score.text = "Score: " + str(score)
 		
 func tile_to_pixel_center(x, y):
@@ -476,12 +490,40 @@ func clear_level():
 	tile_map.clear()
 
 func initiate_combat():
-	pass
-
+	start_dialog()
 
 func _on_Button_pressed():
 	level_num = 0
 	score = 0
 	build_level()
 	$CanvasLayer/Win.visible = false
+	$CanvasLayer/Lose.visible = false
 	player_hp = PLAYER_START_HP
+	player.current_workload = player.STARTING_WORKLOAD
+
+func start_dialog():
+	var dialog = LVL1_WORKER_DIALOG + str(rng.randi_range(1, 2))
+	var new_dialog = Dialogic.start(dialog, false)
+	# new_dialog.set_position(DIALOG_POS, true)
+	dialog_control.add_child(new_dialog)
+	new_dialog.connect("dialogic_signal", self, 'dialogic_signal')
+	new_dialog.connect("timeline_end", self, 'after_dialog')
+	is_dialog_open = true
+
+func after_dialog():
+	is_dialog_open = false
+
+func dialogic_signal(args):
+	if args == "loser":
+		is_dialog_open = false
+		print("You lost and you should feel bad about yourself")
+		player.current_workload += 1
+		if (player.current_workload >= player.MAX_WORKLOAD):
+			$CanvasLayer/Lose.visible = true
+	if args == "winner":
+		is_dialog_open = false
+		print("A winner is you!")
+		active_enemy.take_damage(self, 1)
+
+	active_enemy.remove()
+	enemies.erase(active_enemy)

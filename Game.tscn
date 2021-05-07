@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Art/stone.png" type="Texture" id=1]
 [ext_resource path="res://Art/ladder.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Art/ground.png" type="Texture" id=6]
 [ext_resource path="res://Art/wall.png" type="Texture" id=7]
 [ext_resource path="res://Art/black.png" type="Texture" id=8]
+[ext_resource path="res://Player.gd" type="Script" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
@@ -144,6 +145,7 @@ format = 1
 position = Vector2( 384, 128 )
 texture = ExtResource( 5 )
 centered = false
+script = ExtResource( 9 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 16, 16 )
@@ -154,29 +156,32 @@ drag_margin_v_enabled = true
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" type="ColorRect" parent="CanvasLayer"]
-margin_right = 640.0
+margin_right = 1280.0
 margin_bottom = 32.0
 color = Color( 0.137255, 0.137255, 0.137255, 0.643137 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Level" type="Label" parent="CanvasLayer/HUD"]
+[node name="Floor" type="Label" parent="CanvasLayer/HUD"]
 margin_left = 32.0
 margin_right = 128.0
 margin_bottom = 32.0
-text = "Level: "
+text = "Floor:"
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HP" type="Label" parent="CanvasLayer/HUD"]
-margin_left = 160.0
-margin_right = 256.0
+[node name="Workload" type="Label" parent="CanvasLayer/HUD"]
+margin_left = 139.784
+margin_right = 235.784
 margin_bottom = 32.0
-text = "HP: "
+text = "Workload: "
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Score" type="Label" parent="CanvasLayer/HUD"]
 margin_left = 288.0
@@ -188,25 +193,68 @@ valign = 1
 [node name="Win" type="ColorRect" parent="CanvasLayer"]
 visible = false
 margin_top = 32.0
-margin_right = 640.0
-margin_bottom = 360.0
+margin_right = 1285.0
+margin_bottom = 719.0
 color = Color( 0.0509804, 0.0470588, 0.0470588, 0.858824 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="CanvasLayer/Win"]
-margin_left = 224.0
-margin_top = 96.0
-margin_right = 416.0
-margin_bottom = 128.0
+margin_left = 544.0
+margin_top = 264.0
+margin_right = 736.0
+margin_bottom = 296.0
 text = "A winner is you!"
 align = 1
 
 [node name="Button" type="Button" parent="CanvasLayer/Win"]
-margin_left = 256.0
-margin_top = 128.0
-margin_right = 384.0
-margin_bottom = 160.0
+margin_left = 576.0
+margin_top = 296.0
+margin_right = 704.0
+margin_bottom = 328.0
 text = "Play again"
+
+[node name="Lose" type="ColorRect" parent="CanvasLayer"]
+visible = false
+margin_top = 32.0
+margin_right = 1280.0
+margin_bottom = 720.0
+color = Color( 0.0509804, 0.0470588, 0.0470588, 0.858824 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CanvasLayer/Lose"]
+margin_left = 472.0
+margin_top = 200.0
+margin_right = 811.0
+margin_bottom = 401.0
+text = "Dear Employee #432
+
+We regret to inform you that your performance have been deemed unsatisfactory. For this reason we are forced to terminate your employment immediately, with no severance.
+
+Your account has been locked and your privileges revoked, please wait for security to escort you out of the building.
+
+Have a nice day!"
+align = 1
+autowrap = true
+
+[node name="Button" type="Button" parent="CanvasLayer/Lose"]
+margin_left = 570.851
+margin_top = 431.292
+margin_right = 698.851
+margin_bottom = 463.292
+text = "Play again"
+
+[node name="DialogControl" type="Control" parent="CanvasLayer"]
+margin_left = 294.734
+margin_top = 558.057
+margin_right = 979.734
+margin_bottom = 718.057
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="CanvasLayer/Win/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Lose/Button" to="." method="_on_Button_pressed"]
