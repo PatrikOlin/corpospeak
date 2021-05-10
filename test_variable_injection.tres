@@ -1,0 +1,148 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/EXP-System-Dialog/Resource_EditorStory/EXP_EditorStory.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+TYPE = "EXP_Story_editor"
+names = {
+"DialogPlayer/Test": 1,
+"DialogPlayer/VariableInjection": 2
+}
+story = {
+1: {
+"available_nid": [  ],
+"groups": [  ],
+"human_readable_description": "First test of dialog player.",
+"name": "DialogPlayer/Test",
+"nodes": {
+1: {
+"graph_offset": Vector2( -20, -300 ),
+"links": {
+0: 2
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<start>",
+"type": "line"
+},
+2: {
+"graph_offset": Vector2( 20, -100 ),
+"links": {
+0: 3
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Worker</speaker>
+<dialog>Uhm excuse me, do you have a minute?</dialog>",
+"type": "line"
+},
+3: {
+"graph_offset": Vector2( 100, 100 ),
+"links": {
+0: 4
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Player</speaker>
+<dialog>Yea, I guess...</dialog>",
+"type": "line"
+},
+4: {
+"graph_offset": Vector2( 580, -300 ),
+"links": {
+0: 5
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Worker</speaker>
+<dialog>Great, here, do all my work, I'm gonna go part-ay! Woo, party!</dialog>",
+"type": "line"
+},
+5: {
+"graph_offset": Vector2( 640, -120 ),
+"links": {
+0: 6
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>Player</speaker>
+<dialog>double u tee eff mate?</dialog>",
+"type": "line"
+},
+6: {
+"graph_offset": Vector2( 660, 100 ),
+"links": {
+
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<end>",
+"type": "line"
+}
+}
+},
+2: {
+"available_nid": [  ],
+"groups": [  ],
+"human_readable_description": "Dialog player variable injection test",
+"name": "DialogPlayer/VariableInjection",
+"nodes": {
+1: {
+"graph_offset": Vector2( 40, 40 ),
+"links": {
+0: 3
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<start>",
+"type": "line"
+},
+2: {
+"graph_offset": Vector2( 580, -20 ),
+"links": {
+
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<end>",
+"type": "line"
+},
+3: {
+"graph_offset": Vector2( -20, -160 ),
+"links": {
+0: 4
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>marvin</speaker>
+<dialog>Testing variable injection, show <var>Test</var></dialog>",
+"type": "line"
+},
+4: {
+"graph_offset": Vector2( 20, 60 ),
+"links": {
+0: 5
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>COMPUTOR</speaker>
+<dialog>I know the datetime <var>DATE</var></dialog>",
+"type": "line"
+},
+5: {
+"graph_offset": Vector2( 600, -320 ),
+"links": {
+0: 2
+},
+"rect_size": Vector2( 324, 137 ),
+"slot_amount": 1,
+"text": "<speaker>COMPUTOR</speaker>
+<dialog>And I know your system <var>SYSTEM</var></dialog>",
+"type": "line"
+}
+}
+}
+}
+available_dids = [  ]
+groups = [  ]

@@ -1,0 +1,31 @@
+{
+
+    "p0": {
+        "id": "p0",
+        "known": true,
+        "phrase": "Hey, uh, this is just a base phrase, my man",
+        "answer": "What does that even mean?",
+        "reaction": "What do you mean? Better brush up on your corpospeak, buddy!"
+    },
+    "w10": {
+        "id": "w10",
+        "known": false,
+        "phrase": "I need you to pitch in, it's critically important that we hit the ground running on this project",
+        "answer": "Are you sure these market projections are even correct?",
+        "reaction": "Yea, yea, I'm sure... Or, well... I think so. I mean, I will double-check!"
+    },
+    "w11": {
+        "id": "w11",
+        "known": false,
+        "phrase": "Today is an 'all hands on deck' kind of day, I need you to drop what you are doing now!",
+        "answer": "Shouldn't we put this on the back-burner until we have all our ducks in a row?",
+        "reaction": "Uh, yea, of course. Just what I was thinking, I mean, that's what I told them. We should wait. Yea..."
+    },
+    "w12": {
+        "id": "w12",
+        "known": false,
+        "phrase": "We need to get on this ASAP. Leveraging our goodwill with millenials will help increase sales",
+        "answer": "Millenials? Let's not waste our time, focus on the low-hanging fruit, the whales!",
+        "reaction": "Of course, the whales! That's what I meant. Stupid millenials are ruining the whole market anyways."
+    }
+}

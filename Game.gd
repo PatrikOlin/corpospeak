@@ -93,6 +93,8 @@ onready var tile_map = $TileMap
 onready var visibility_map = $VisibilityMap
 onready var player = $Player
 onready var dialog_control = $CanvasLayer/DialogControl
+onready var dialog = $CanvasLayer/Dialog_player
+onready var _registry = get_node("/root/Registry")
 
 # Game State
 
@@ -109,6 +111,7 @@ func _ready():
 	rng.randomize()
 	randomize()
 	build_level()
+	dialog.connect("dialog_closed", self, "_on_Dialog_closed")
 
 func _input(event):
 	if !event.is_pressed() or is_dialog_open:
@@ -502,16 +505,21 @@ func _on_Button_pressed():
 	player.current_workload = player.STARTING_WORKLOAD
 
 func start_dialog():
-	var dialog = LVL1_WORKER_DIALOG + str(rng.randi_range(1, 2))
-	var new_dialog = Dialogic.start(dialog, false)
-	# new_dialog.set_position(DIALOG_POS, true)
-	dialog_control.add_child(new_dialog)
-	new_dialog.connect("dialogic_signal", self, 'dialogic_signal')
-	new_dialog.connect("timeline_end", self, 'after_dialog')
+	dialog.play_dialog("Floor1/w10")
+	# var dialog = LVL1_WORKER_DIALOG + str(rng.randi_range(1, 2))
+	# var new_dialog = Dialogic.start(dialog, false)
+	# # new_dialog.set_position(DIALOG_POS, true)
+	# dialog_control.add_child(new_dialog)
+	# new_dialog.connect("dialogic_signal", self, 'dialogic_signal')
+	# new_dialog.connect("timeline_end", self, 'after_dialog')
 	is_dialog_open = true
 
-func after_dialog():
+func after_dialog(corpo_id):
+	player.learn_phrase(corpo_id)
 	is_dialog_open = false
+
+func _on_Dialog_closed(corpo_id):
+	after_dialog(corpo_id)
 
 func dialogic_signal(args):
 	if args == "loser":

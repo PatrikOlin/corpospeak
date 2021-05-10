@@ -44,13 +44,15 @@ _global_script_class_icons={
 
 [application]
 
-config/name="DungeonOfRecycling"
+config/name="corpospeak"
 run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
+Registry="*res://Registry.gd"
 DialogicSingleton="*res://addons/dialogic/Other/DialogicSingleton.gd"
+Player="*res://Player.gd"
 
 [display]
 
@@ -60,7 +62,7 @@ window/stretch/mode="viewport"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "dialogic" )
+enabled=PoolStringArray( "EXP-System-Dialog", "dialogic" )
 
 [input]
 

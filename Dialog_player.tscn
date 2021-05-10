@@ -1,0 +1,244 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://inputregular.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Fonts/Input-regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Art/dialog.png" type="Texture" id=3]
+[ext_resource path="res://Dialog_player.gd" type="Script" id=4]
+[ext_resource path="res://Option.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Animation" id=1]
+resource_name = "BodyTextReveal"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "BounceConfirm"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "BounceConfirm"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.05, 1.05 ), Vector2( 1, 1 ) ]
+}
+
+[node name="Dialog_player" type="Node"]
+script = ExtResource( 4 )
+
+[node name="Dialog_Box" type="Control" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -195.088
+margin_bottom = -195.088
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Body_NinePatchRect" type="NinePatchRect" parent="Dialog_Box"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -360.0
+margin_top = -126.502
+margin_right = 360.0
+margin_bottom = 129.498
+rect_min_size = Vector2( 720, 256 )
+texture = ExtResource( 3 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="Dialog_Box/Body_NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 48.0
+margin_right = -16.0
+margin_bottom = -48.0
+
+[node name="Body_Label" type="Label" parent="Dialog_Box/Body_NinePatchRect/MarginContainer"]
+margin_right = 688.0
+margin_bottom = 160.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 1 )
+text = "Feed me body text! Feed me!"
+autowrap = true
+percent_visible = 0.0
+
+[node name="Body_AnimationPlayer" type="AnimationPlayer" parent="Dialog_Box/Body_NinePatchRect/MarginContainer/Body_Label"]
+anims/BodyTextReveal = SubResource( 1 )
+
+[node name="Speaker_NinePatchRect" type="NinePatchRect" parent="Dialog_Box/Body_NinePatchRect"]
+margin_left = -28.4678
+margin_top = -22.4746
+margin_right = 151.532
+margin_bottom = 25.5254
+texture = ExtResource( 3 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="Speaker_Label" type="Label" parent="Dialog_Box/Body_NinePatchRect/Speaker_NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 2 )
+text = "Speaker"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Confirm_NinePatchRect" type="NinePatchRect" parent="Dialog_Box/Body_NinePatchRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -241.045
+margin_top = -40.0
+margin_right = 14.9547
+margin_bottom = 8.0
+rect_min_size = Vector2( 256, 48 )
+texture = ExtResource( 3 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Confirm_Label" type="Label" parent="Dialog_Box/Body_NinePatchRect/Confirm_NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+text = "Proceed"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Confirm_AnimationPlayer" type="AnimationPlayer" parent="Dialog_Box/Body_NinePatchRect/Confirm_NinePatchRect"]
+autoplay = "BounceConfirm"
+anims/BounceConfirm = SubResource( 3 )
+
+[node name="SelectOption_NinePatchRect" type="NinePatchRect" parent="Dialog_Box/Body_NinePatchRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -241.045
+margin_top = -40.0
+margin_right = 14.9547
+margin_bottom = 8.0
+rect_min_size = Vector2( 256, 48 )
+texture = ExtResource( 3 )
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectOption_Label" type="Label" parent="Dialog_Box/Body_NinePatchRect/SelectOption_NinePatchRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+text = "Select option"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectOption_AnimationPlayer" type="AnimationPlayer" parent="Dialog_Box/Body_NinePatchRect/SelectOption_NinePatchRect"]
+autoplay = "BounceConfirm"
+anims/BounceConfirm = SubResource( 4 )
+
+[node name="Option_List" type="VBoxContainer" parent="Dialog_Box/Body_NinePatchRect"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -720.0
+margin_top = -195.429
+margin_bottom = -43.4289
+grow_vertical = 0
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Option" parent="Dialog_Box/Body_NinePatchRect/Option_List" instance=ExtResource( 6 )]
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 720.0
+margin_bottom = 48.0
+
+[node name="Option2" parent="Dialog_Box/Body_NinePatchRect/Option_List" instance=ExtResource( 6 )]
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 52.0
+margin_right = 720.0
+margin_bottom = 100.0
+
+[node name="Option3" parent="Dialog_Box/Body_NinePatchRect/Option_List" instance=ExtResource( 6 )]
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 104.0
+margin_right = 720.0
+margin_bottom = 152.0
+
+[node name="Character_portrait" type="TextureRect" parent="Dialog_Box/Body_NinePatchRect"]
+margin_left = -210.0
+margin_top = 50.0
+margin_right = -50.0
+margin_bottom = 210.0
+[connection signal="animation_finished" from="Dialog_Box/Body_NinePatchRect/MarginContainer/Body_Label/Body_AnimationPlayer" to="." method="_on_Body_AnimationPlayer_animation_finished"]

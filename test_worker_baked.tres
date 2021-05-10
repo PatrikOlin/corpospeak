@@ -1,0 +1,231 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://addons/EXP-System-Dialog/Resource_BakedStory/EXP_BakedStory.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+TYPE = "EXP_Baked_Story"
+story = {
+1: {
+"nodes": {
+1: {
+"links": {
+0: 2
+},
+"text": "<start>"
+},
+2: {
+"links": {
+0: 3
+},
+"text": "<speaker>Worker</speaker>
+<dialog>Uhm excuse me, do you have a minute?</dialog>"
+},
+3: {
+"links": {
+0: 4
+},
+"text": "<speaker>Player</speaker>
+<dialog>Yea, I guess...</dialog>"
+},
+4: {
+"links": {
+0: 5
+},
+"text": "<speaker>Worker</speaker>
+<dialog>Great, here, do all my work, I'm gonna go part-ay! Woo, party!</dialog>"
+},
+5: {
+"links": {
+0: 6
+},
+"text": "<speaker>Player</speaker>
+<dialog>double u tee eff mate?</dialog>"
+},
+6: {
+"links": {
+
+},
+"text": "<end>"
+}
+}
+},
+2: {
+"nodes": {
+1: {
+"links": {
+0: 3
+},
+"text": "<start>"
+},
+2: {
+"links": {
+
+},
+"text": "<end>"
+},
+3: {
+"links": {
+0: 4
+},
+"text": "<speaker>marvin</speaker>
+<dialog>Testing variable injection, show <var>Test</var></dialog>"
+},
+4: {
+"links": {
+0: 5
+},
+"text": "<speaker>COMPUTOR</speaker>
+<dialog>I know the datetime <var>DATE</var></dialog>"
+},
+5: {
+"links": {
+0: 2
+},
+"text": "<speaker>COMPUTOR</speaker>
+<dialog>And I know your system <var>SYSTEM</var></dialog>"
+}
+}
+},
+3: {
+"nodes": {
+1: {
+"links": {
+0: 3
+},
+"text": "<start>"
+},
+2: {
+"links": {
+
+},
+"text": "<end>"
+},
+3: {
+"links": {
+0: 4,
+1: 5,
+2: 7
+},
+"text": "<speaker>COMPUTOR</speaker>
+<dialog>Make your choice</dialog>
+<choiceJSON>{\"options\":[{\"text\": \"Reddish\", \"id\": \"w10\", \"slot\": 0}, {\"text\": \"Blueish\", \"id\": \"w11\", \"slot\": 1}, {\"text\": \"Greenish\", \"id\": \"w12\", \"slot\": 2}]}</choiceJSON>"
+},
+4: {
+"links": {
+0: 6
+},
+"text": "<speaker>Red Option</speaker>
+<dialog>This was a poor choice, hombre. You gonna flip out!</dialog>"
+},
+5: {
+"links": {
+0: 6
+},
+"text": "<speaker>Blue Option</speaker>
+<dialog>Mellow choice, my brother. Lets relalalaxa</dialog>"
+},
+6: {
+"links": {
+0: 2
+},
+"text": "<speaker>COMPUTOR</speaker>
+<dialog>Streams merged!</dialog>"
+},
+7: {
+"links": {
+0: 6
+},
+"text": "<speaker>Green Option</speaker>
+<dialog>SHOW ME THE MONEY, JERRY, SHOW ME THE MONEY!</dialog>"
+}
+}
+},
+4: {
+"nodes": {
+1: {
+"links": {
+0: 7
+},
+"text": "<start>"
+},
+2: {
+"links": {
+
+},
+"text": "<end>"
+},
+3: {
+"links": {
+0: 4,
+1: 5,
+2: 6
+},
+"text": "<speaker>Worker</speaker>
+<portrait>worker01</portrait>
+<dialog><corpoPhrase>w10</corpoPhrase></dialog>
+<choiceJSON>{\"options\":[{\"id\": \"w10\", \"slot\": 0}, {\"id\": \"w11\", \"slot\": 1}, { \"id\": \"w12\", \"slot\": 1}, {\"id\":\"p0\", \"slot\":2}]}</choiceJSON>"
+},
+4: {
+"links": {
+0: 2
+},
+"text": "<speaker>Worker</speaker>
+<portrait>worker01</portrait>
+<dialog><corpoReaction>w10</corpoReaction></dialog>"
+},
+5: {
+"links": {
+0: 2
+},
+"text": "<speaker>Worker</speaker>
+<portrait>worker01</portrait>
+<dialog>What? Stop talking nonsense, lets schedule a meeting, how does today at 16:30 sound?</dialog>"
+},
+6: {
+"links": {
+0: 2
+},
+"text": "<speaker>Worker</speaker>
+<portrait>worker01</portrait>
+<dialog>What? Stop talking nonsense, lets schedule a meeting, how does today at 16:30 sound?</dialog>"
+},
+7: {
+"links": {
+0: 8
+},
+"text": "<speaker>Worker</speaker>
+<portrait>worker01</portrait>
+<dialog>Hey, hold up!</dialog>"
+},
+8: {
+"links": {
+0: 3
+},
+"text": "<speaker>Player</speaker>
+<portrait>player</portrait>
+<dialog>What is it?</dialog>"
+}
+}
+},
+5: {
+"nodes": {
+1: {
+"links": {
+
+},
+"text": "{
+\"player\": \"res://Art/portraits/Male_14_small.png\",
+\"worker01\": \"res://Art/portraits/Male_01_small.png\"
+}"
+}
+}
+}
+}
+names = {
+"DialogPlayer/Branching": 3,
+"DialogPlayer/CharacterPortraits": 5,
+"DialogPlayer/Test": 1,
+"DialogPlayer/VariableInjection": 2,
+"Floor1/w10": 4
+}
